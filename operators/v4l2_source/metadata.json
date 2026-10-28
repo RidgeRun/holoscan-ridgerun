@@ -1,0 +1,28 @@
+{
+  "$schema": "urn:holohub:operator:v1",
+  "operator": {
+    "name": "v4l2_source",
+    "authors": [{"name": "Holoscan Team", "affiliation": "NVIDIA"}],
+    "description": "Capture unpacked RG10 Bayer frames from a V4L2 device into CUDA tensors",
+    "language": ["C++"],
+    "version": "0.2.0",
+    "changelog": {"0.2.0": "Negotiate IMX274 RG10 and publish uint16 Bayer tensors", "0.1.0": "Initial Holoscan SDK (HSDK) 5 implementation"},
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": ["Camera", "CUDA", "V4L2"],
+    "ranking": 2,
+    "requirements": {
+      "hardware": [
+        {
+          "name": "V4L2 camera",
+          "description": "An IMX274-compatible camera node that supports progressive RG10 capture",
+          "required": true
+        }
+      ],
+      "libraries": [{"name": "CUDA Toolkit", "required": true}]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "urn:holohub:operator:v1",
+  "operator": {
+    "name": "perf_op",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Zero-copy Tensor pass-through that reports framerate, bitrate, and optional aggregate CPU load",
+    "language": ["C++"],
+    "version": "0.1.0",
+    "changelog": {"0.1.0": "Initial Holoscan SDK (HSDK) 5.x implementation inspired by RidgeRun gst-perf"},
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["x86_64", "aarch64"],
+    "tags": ["Benchmarking", "Data Flow", "Tensor"],
+    "ranking": 2,
+    "requirements": {}
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "urn:holohub:application:v1",
+  "application": {
+    "name": "yolo11_userptr_inference",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Headless IMX274 V4L2 USERPTR capture and YOLO11 TensorRT inference with a CUDA tensor sink",
+    "language": "C++",
+    "version": "0.2.0",
+    "changelog": {
+      "0.2.0": "Add RidgeRun fakesink_op and fuse raw conversion directly into the model tensor",
+      "0.1.0": "Initial native Holoscan SDK (HSDK) 5.x port"
+    },
+    "dockerfile": "applications/yolo11_userptr_inference/Dockerfile",
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": [
+      "Camera", "Computer Vision and Perception", "CUDA", "TensorRT",
+      "V4L2", "YOLO Detection"
+    ],
+    "ranking": 2,
+    "requirements": {
+      "hardware": [
+        {
+          "name": "IMX274 V4L2 camera",
+          "description": "An IMX274-compatible node exposing RG10 at the selected resolution and frame rate",
+          "required": false
+        },
+        {
+          "name": "NVIDIA GPU",
+          "description": "CUDA-capable GPU supported by HSDK 5.x and TensorRT",
+          "required": true
+        }
+      ],
+      "operators": [
+        {"name": "fakesink_op", "version": "0.1.0"},
+        {"name": "tensorrt_inference", "version": "0.1.0"},
+        {"name": "v4l2_userptr_source", "version": "0.1.0"}
+      ],
+      "models": [
+        {
+          "name": "YOLO11n DeepStream-Yolo export",
+          "license": "AGPL-3.0",
+          "source": "https://github.com/marcoslucianops/DeepStream-Yolo"
+        }
+      ]
+    },
+    "default_mode": "validate",
+    "modes": {
+      "live": {
+        "description": "Capture IMX274 RG10, run the local DeepStream YOLO11 engine, and discard its CUDA output",
+        "build": {"docker_build_args": ["--target", "yolo11-userptr-inference-live"]},
+        "run": {
+          "command": "\"<holohub_app_bin>/yolo11_userptr_inference\" --device /dev/video0 --model /home/nvidia/DeepStream-Yolo/yolo11n_user.onnx_b1_gpu0_fp16.engine --width 1920 --height 1080 --fps 60 --optical-black 0 --raw-shift 6 --input-gain 8.0 --bayer-grid 1",
+          "workdir": "holohub_bin"
+        }
+      },
+      "validate": {
+        "description": "Compile the complete graph without opening the camera or model",
+        "build": {"docker_build_args": ["--target", "yolo11-userptr-inference-validate"]},
+        "run": {
+          "command": "\"<holohub_app_bin>/yolo11_userptr_inference\" --validate",
+          "workdir": "holohub_bin"
+        }
+      }
+    }
+  }
+}

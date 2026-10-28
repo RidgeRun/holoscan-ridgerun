@@ -1,0 +1,33 @@
+{
+  "$schema": "urn:holohub:operator:v1",
+  "operator": {
+    "name": "drm_display",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Convert CUDA YUYV tensors directly into DRM/KMS DMABUF framebuffers without display-stage host copies or X11",
+    "language": ["C++"],
+    "version": "0.1.0",
+    "changelog": {"0.1.0": "Initial exclusive DRM/KMS display operator"},
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": ["CUDA", "DRM", "KMS", "Visualization", "Display"],
+    "ranking": 1,
+    "requirements": {
+      "hardware": [
+        {
+          "name": "DRM/KMS connector",
+          "description": "A connected display connector exposed by /dev/dri/card*; the application must own DRM master",
+          "required": true
+        },
+        {
+          "name": "CUDA DMABUF external-memory import",
+          "description": "NVIDIA Thor/Jetson platform support for CU_EXTERNAL_MEMORY_HANDLE_TYPE_DMABUF_FD",
+          "required": true
+        }
+      ],
+      "libraries": [{"name": "libdrm", "required": true}]
+    }
+  }
+}

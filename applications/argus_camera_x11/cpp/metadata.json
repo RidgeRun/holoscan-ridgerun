@@ -1,0 +1,60 @@
+{
+  "$schema": "urn:holohub:application:v1",
+  "application": {
+    "name": "argus_camera_x11",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Direct Jetson MIPI CSI capture through Argus EGLStream with CUDA conversion and X11 display",
+    "language": "C++",
+    "version": "0.1.0",
+    "changelog": {"0.1.0": "Initial Holoscan SDK (HSDK) 5 implementation"},
+    "dockerfile": "applications/argus_camera_x11/Dockerfile",
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": ["Argus", "Camera", "CUDA", "CSI", "Jetson", "Visualization", "X11"],
+    "ranking": 2,
+    "requirements": {
+      "hardware": [
+        {
+          "name": "Jetson CSI camera",
+          "description": "An Argus-compatible MIPI CSI-2 camera attached directly to the Jetson board",
+          "required": true
+        },
+        {
+          "name": "X11 display",
+          "description": "An accessible local X11 display",
+          "required": true
+        }
+      ],
+      "operators": [
+        {"name": "argus_camera", "version": "0.1.0"},
+        {"name": "x11_display", "version": "0.1.0"}
+      ]
+    },
+    "default_mode": "live",
+    "modes": {
+      "live": {
+        "description": "Capture camera 0 sensor mode 0 at a replaceable 1920x1080 default",
+        "build": {
+          "docker_build_args": ["--target", "argus-camera-x11-live"]
+        },
+        "run": {
+          "command": "\"<holohub_app_bin>/argus_camera_x11\" --width 1920 --height 1080",
+          "workdir": "holohub_bin"
+        }
+      },
+      "validate": {
+        "description": "Compile the graph without opening the camera or display",
+        "build": {
+          "docker_build_args": ["--target", "argus-camera-x11-validate"]
+        },
+        "run": {
+          "command": "\"<holohub_app_bin>/argus_camera_x11\" --width 1920 --height 1080 --validate",
+          "workdir": "holohub_bin"
+        }
+      }
+    }
+  }
+}

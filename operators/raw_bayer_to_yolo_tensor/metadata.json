@@ -1,0 +1,17 @@
+{
+  "$schema": "urn:holohub:operator:v1",
+  "operator": {
+    "name": "raw_bayer_to_yolo_tensor",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Fused RG10 Bayer-to-YOLO preprocessing with one shared Bayer neighborhood per output pixel",
+    "language": ["C++", "CUDA"],
+    "version": "0.1.0",
+    "changelog": {"0.1.0": "Add fused RG10 preprocessing for Holoscan SDK (HSDK) 5"},
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": ["v4l2", "imx274", "rg10", "bayer", "cuda", "yolo"]
+  }
+}

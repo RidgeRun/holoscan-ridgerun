@@ -1,0 +1,61 @@
+{
+  "$schema": "urn:holohub:module:v2",
+  "module": {
+    "name": "holoscan-ridgerun",
+    "version": "0.1.0",
+    "description": "RidgeRun camera, display, Interprocess, and TensorRT applications for Holoscan",
+    "authors": [
+      {
+        "name": "RidgeRun",
+        "affiliation": "RidgeRun, LLC"
+      }
+    ],
+    "license": "Apache-2.0",
+    "language": ["C++"],
+    "namespace": {
+      "cpp": "holoscan::ops"
+    },
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["x86_64", "aarch64"],
+    "tags": [
+      "Camera",
+      "CUDA",
+      "DRM",
+      "Interprocess",
+      "TensorRT",
+      "V4L2",
+      "X11"
+    ],
+    "source_repository": "https://github.com/ridgeRun/holoscan-ridgerun",
+    "operator_names": [
+      "argus_camera",
+      "bgra_to_planar_tensor",
+      "cuda_compositor",
+      "drm_bgra_display",
+      "drm_display",
+      "fakesink_op",
+      "flow_trace",
+      "frame_skipper",
+      "interprocess_src",
+      "perf_op",
+      "raw_bayer_to_bgra",
+      "raw_bayer_to_yolo_tensor",
+      "tensorrt_inference",
+      "test_pattern",
+      "v4l2_source",
+      "v4l2_userptr_source",
+      "x11_display",
+      "yuyv_to_bgra"
+    ],
+    "dockerfile": "Dockerfile",
+    "binary_packages": {
+      "debian": "holoscan-ridgerun"
+    },
+    "documentation": {
+      "readme": "README.md"
+    }
+  }
+}

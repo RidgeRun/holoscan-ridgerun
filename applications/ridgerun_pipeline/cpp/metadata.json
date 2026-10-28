@@ -1,0 +1,39 @@
+{
+    "$schema": "urn:holohub:application:v1",
+    "application": {
+        "name": "ridgerun_pipeline",
+        "authors": [
+            {
+                "name": "RidgeRun",
+                "affiliation": "RidgeRun, LLC"
+            }
+        ],
+        "language": ["C++"],
+        "version": "0.1.0",
+        "changelog": {
+            "0.1.0": "TODO: describe this example application"
+        },
+        "holoscan_sdk": {
+            "minimum_required_version": "5.0.0",
+            "tested_versions": ["5.0.0"]
+        },
+        "platforms": ["x86_64", "aarch64"],
+        "tags": ["TODO: add tags"],
+        "ranking": 3,
+        "requirements": {
+            "operators": [
+                {"name": "fakesink_op", "version": "0.1.0"}
+            ]
+        },
+        "default_mode": "default",
+        "modes": {
+            "default": {
+                "description": "Run the C++ ridgerun pipeline",
+                "run": {
+                    "command": "<holohub_app_bin>/ridgerun_pipeline",
+                    "workdir": "holohub_app_bin"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "urn:holohub:application:v1",
+  "application": {
+    "name": "interprocess",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Live V4L2 USERPTR external Tensor endpoint demo",
+    "language": "C++",
+    "version": "0.3.0",
+    "changelog": {
+      "0.3.0": "Live V4L2 USERPTR external Tensor endpoint demo",
+      "0.2.0": "Port the cross-process Interprocess demo to Holoscan SDK (HSDK) 5",
+      "0.1.0": "Initial SDK 5.x cross-process Interprocess demo"
+    },
+    "dockerfile": "applications/interprocess/Dockerfile",
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["aarch64"],
+    "tags": ["CUDA", "Data Flow", "Interprocess", "Tensor", "Visualization"],
+    "ranking": 2,
+    "requirements": {
+      "hardware": [
+        {
+          "name": "NVIDIA GPU",
+          "description": "CUDA-capable GPU required by the camera conversion and display paths",
+          "required": true
+        },
+        {
+          "name": "V4L2 camera",
+          "description": "RAW10 camera driver supporting V4L2_MEMORY_USERPTR capture",
+          "required": true
+        },
+        {
+          "name": "X11 display",
+          "description": "Required by interprocess_receiver for visualization",
+          "required": false
+        }
+      ],
+      "operators": [
+        {"name": "interprocess_src", "version": "0.2.0"},
+        {"name": "raw_bayer_to_bgra", "version": "0.1.0"},
+        {"name": "v4l2_userptr_source", "version": "0.1.0"},
+        {"name": "x11_display", "version": "0.1.0"}
+      ]
+    },
+    "default_mode": "validate",
+    "modes": {
+      "sender": {
+        "description": "Run the sender process that publishes the video endpoint",
+        "build": {
+          "docker_build_args": ["--target", "interprocess-sender"],
+          "cmake_options": ["-DAPP_interprocess=ON"]
+        },
+        "run": {
+          "command": "\"<holohub_app_bin>/interprocess_sender\" --catalog \"<holohub_data_dir>/interprocess/catalog.json\"",
+          "workdir": "holohub_bin"
+        }
+      },
+      "receiver": {
+        "description": "Run the receiver process and display the video endpoint",
+        "build": {
+          "docker_build_args": ["--target", "interprocess-receiver"],
+          "cmake_options": ["-DAPP_interprocess=ON"]
+        },
+        "run": {
+          "command": "\"<holohub_app_bin>/interprocess_receiver\" --catalog \"<holohub_data_dir>/interprocess/catalog.json\"",
+          "workdir": "holohub_bin"
+        }
+      },
+      "validate": {
+        "description": "Compile the sender graph and write its endpoint catalog without running it",
+        "build": {
+          "docker_build_args": ["--target", "interprocess-validate"],
+          "cmake_options": ["-DAPP_interprocess=ON"]
+        },
+        "run": {
+          "command": "\"<holohub_app_bin>/interprocess_sender\" --catalog \"<holohub_data_dir>/interprocess/catalog.json\" --validate",
+          "workdir": "holohub_bin"
+        }
+      }
+    }
+  }
+}

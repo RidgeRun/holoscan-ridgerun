@@ -1,0 +1,19 @@
+{
+  "$schema": "urn:holohub:operator:v1",
+  "operator": {
+    "name": "fakesink_op",
+    "authors": [{"name": "RidgeRun", "affiliation": "RidgeRun, LLC"}],
+    "description": "Consume tensor samples without copying their payload",
+    "language": ["C++"],
+    "version": "0.1.0",
+    "changelog": {"0.1.0": "Port RidgeRun FakesinkOp to Holoscan SDK (HSDK) 5 tensor samples"},
+    "holoscan_sdk": {
+      "minimum_required_version": "5.0.0",
+      "tested_versions": ["5.0.0"]
+    },
+    "platforms": ["x86_64", "aarch64"],
+    "tags": ["Development", "Sink", "Tensor"],
+    "ranking": 3,
+    "requirements": {}
+  }
+}
